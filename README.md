@@ -137,7 +137,7 @@ are provided in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 This work uses the [SCORPION dataset](https://doi.org/10.5281/zenodo.16517924),
 introduced by Ryu et al. in
-[*SCORPION: Addressing Scanner-Induced Variability in Histopathology*](https://arxiv.org/abs/2507.20907).
+[*SCORPION: Addressing Scanner-Induced Variability in Histopathology*](https://link.springer.com/chapter/10.1007/978-3-032-06593-3_10).
 We thank the authors for making this scanner-paired histopathology dataset publicly available.
 
 ---
