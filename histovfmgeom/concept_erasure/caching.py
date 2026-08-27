@@ -1,3 +1,8 @@
+# This file is adapted from EleutherAI/concept-erasure:
+# https://github.com/EleutherAI/concept-erasure/tree/main
+# Copyright (c) 2023 EleutherAI
+# Licensed under the MIT License; see THIRD_PARTY_NOTICES.md.
+
 from functools import wraps
 from typing import Callable
 

@@ -28,18 +28,22 @@ from histovfmgeom.evaluation.probe import evaluate_probe_train_test
 from histovfmgeom.projections.linear import delta_change_summary, feature_change_summary
 
 from ._eraser_io import (
-    apply_eraser,
     apply_delta_transform,
-    save_eraser_npz,
+    apply_eraser,
     save_chained_eraser_npz,
+    save_eraser_npz,
+)
+from ._stage_config import (
+    chain_name as make_chain_name,
 )
 from ._stage_config import (
     expand_stage_grid,
-    stage_source_specs,
     fit_eraser,
     safe_name,
+    stage_source_specs,
+)
+from ._stage_config import (
     stage_name as make_stage_name,
-    chain_name as make_chain_name,
 )
 from ._stain_probe import StainProbeData, build_stain_probe
 

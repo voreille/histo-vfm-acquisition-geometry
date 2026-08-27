@@ -1,4 +1,7 @@
-# reproduced from https://github.com/EleutherAI/concept-erasure/tree/main
+# This file is adapted from EleutherAI/concept-erasure:
+# https://github.com/EleutherAI/concept-erasure/tree/main
+# Copyright (c) 2023 EleutherAI
+# Licensed under the MIT License; see THIRD_PARTY_NOTICES.md.
 
 from dataclasses import dataclass
 from os import PathLike

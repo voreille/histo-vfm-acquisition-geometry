@@ -1,3 +1,8 @@
+# This file is adapted from EleutherAI/concept-erasure:
+# https://github.com/EleutherAI/concept-erasure/blob/main/concept_erasure/shrinkage.py
+# Copyright (c) 2023 EleutherAI
+# Licensed under the MIT License; see THIRD_PARTY_NOTICES.md.
+
 import torch
 from torch import Tensor
 
