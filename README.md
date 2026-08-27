@@ -1,6 +1,6 @@
 # Histo VFM Acquisition Geometry
 
-Code for the paper **"[paper title]"**.
+Code for the paper **"Post-hoc Shrinkage of Acquisition-Induced Variability in Histopathology Vision Foundation Model Embeddings"**.
 
 We characterize and mitigate scanner- and stain-induced variability in histopathology vision foundation model (VFM) embeddings using post-hoc geometric correction on frozen embeddings.
 
@@ -10,6 +10,8 @@ The main workflow is:
 3. Fit the selected eraser on all data (`fit-chained-eraser`)
 
 ---
+[!NOTE]
+**Pre-release status.** This repository currently contains a pre-release implementation. Final reproducibility validation against the experiments reported in the paper is ongoing. Minor changes to the code, configurations, and documentation may occur before the validated `v1.0` release.
 
 ## Installation
 
@@ -42,10 +44,9 @@ The CUDA runtime bundled with PyTorch does not have to match the version shown b
 ### 4. Install this package
 
 ```bash
-pip install -e ".[eva,histoaug]"
+pip install -e ".[histoaug]"
 ```
 
-- `eva` pulls in `torch` + `timm` (VFM encoders).
 - `histoaug` pulls in `tiatoolbox` + `h5py` (stain simulation).
 
 ---
