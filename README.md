@@ -10,8 +10,8 @@ The main workflow is:
 3. Fit the selected eraser on all data (`fit-chained-eraser`)
 
 ---
-[!NOTE]
-**Pre-release status.** This repository currently contains a pre-release implementation. Final reproducibility validation against the experiments reported in the paper is ongoing. Minor changes to the code, configurations, and documentation may occur before the validated `v1.0` release.
+> [!NOTE]
+> **Pre-release status.** This repository currently contains a pre-release implementation. Final reproducibility validation against the experiments reported in the paper is ongoing. Minor changes to the code, configurations, and documentation may occur before the validated `v1.0` release.
 
 ## Installation
 
