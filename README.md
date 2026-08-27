@@ -1,11 +1,133 @@
 # Histo VFM Acquisition Geometry
 
-Methods for characterizing and mitigating scanner- and stain-induced variability in histopathology vision foundation model embeddings.
+Code for the paper **"[paper title]"**.
 
-This repository accompanies our work on post-hoc geometric correction of acquisition-related variation in frozen histopathology vision foundation model embeddings.
+We characterize and mitigate scanner- and stain-induced variability in histopathology vision foundation model (VFM) embeddings using post-hoc geometric correction on frozen embeddings.
 
-The code for fitting and applying the proposed methods, together with instructions for reproducing the experiments, will be uploaded soon.
+The main workflow is:
+1. Prepare the SCORPION dataset (`prepare-scorpion`)
+2. Run a cross-validated erasure grid (`run-experiment`) with `multi_deltas_*` configs
+3. Fit the selected eraser on all data (`fit-chained-eraser`)
 
-## Status
+---
 
-🚧 Code release in preparation.
+## Installation
+
+### 1. Create a conda environment
+
+```bash
+conda create -n histovfmgeom python=3.12 pip -y
+conda activate histovfmgeom
+```
+
+### 2. Upgrade packaging tools
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### 3. Install PyTorch
+
+Install PyTorch 2.13.0 and TorchVision 0.28.0 with the CUDA 12.6 runtime:
+
+```bash
+python -m pip install \
+  torch==2.13.0 \
+  torchvision==0.28.0 \
+  --index-url https://download.pytorch.org/whl/cu126
+```
+
+The CUDA runtime bundled with PyTorch does not have to match the version shown by `nvidia-smi`. The NVIDIA driver must support the selected runtime.
+
+### 4. Install this package
+
+```bash
+pip install -e ".[eva,histoaug]"
+```
+
+- `eva` pulls in `torch` + `timm` (VFM encoders).
+- `histoaug` pulls in `tiatoolbox` + `h5py` (stain simulation).
+
+---
+
+## Data
+
+### Download and prepare SCORPION
+
+Download from [Zenodo 16517924](https://zenodo.org/records/16517924), extract, tile, and write metadata in one command:
+
+```bash
+prepare-scorpion --download
+```
+
+This creates:
+- `data/raw/SCORPION_dataset/` — raw images
+- `data/processed/SCORPION_tiles_224px_0p5mpp/` — 224 px tiles at 0.5 mpp
+- `data/processed/SCORPION_tiles_224px_0p5mpp/metadata.csv`
+
+If you already have the raw data extracted:
+
+```bash
+prepare-scorpion --raw-dir /path/to/SCORPION_dataset
+```
+
+---
+
+## Usage
+
+### 1. Run the cross-validated erasure grid
+
+```bash
+run-experiment --config configs/experiments/scorpion/multi_deltas_grid_soft_h0mini.yaml
+```
+
+Key configs under `configs/experiments/scorpion/`:
+
+| Config | Model | Eraser |
+|---|---|---|
+| `multi_deltas_grid_pca_h0mini.yaml` | H-Optimus-0-mini | PCA |
+| `multi_deltas_grid_pca_hoptimus.yaml` | H-Optimus-1 | PCA |
+| `multi_deltas_grid_soft_h0mini.yaml` | H-Optimus-0-mini | Soft |
+| `multi_deltas_grid_soft_hoptimus1.yaml` | H-Optimus-1 | Soft |
+
+Add `--dry-run` to validate the config without running. Add `--run-only-one-fold` for a quick smoke test.
+
+### 2. Fit the final eraser on all data
+
+After selecting the best hyperparameters from the grid, fit on all SCORPION data:
+
+```bash
+fit-chained-eraser configs/fitting/chained_soft_h0mini_sweep.yaml
+```
+
+Fitting configs are under `configs/fitting/`.
+
+---
+
+## Project structure
+
+```
+configs/
+  experiments/scorpion/   # multi_deltas_* CV configs
+  fitting/                # full-data fitting configs
+histovfmgeom/
+  cli/                    # entry points: prepare_scorpion, run_experiment, fit_chained_eraser_cli
+  concept_erasure/        # eraser classes and fitter (multi_paired_delta_erasers, leace, ...)
+  data/                   # embedding loading and tile dataset
+  deltas/                 # delta construction (scanner, stain, domain)
+  evaluation/             # probe and erasure metrics
+  experiments/            # experiment runner (sequential_delta_grid)
+  models/                 # VFM encoder wrapper
+  projections/            # linear projection utilities
+```
+
+---
+
+## Citation
+
+If you use this code, please cite:
+
+```
+[BibTeX entry]
+```
+
